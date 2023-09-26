@@ -1,7 +1,7 @@
 import { Link, Stack } from 'expo-router';
 import { Image, Text, View, Button } from 'react-native';
 import Icon from '../icon/_icon';
-import {COLORS, SHADOWS} from "../../constants/theme";
+import {COLORS, SHADOWS, SIZES} from "../../constants/theme";
 import _headerBtn from "../header/_headerBtn";
 
 
@@ -14,7 +14,7 @@ function Header({title}) {
                 // https://reactnavigation.org/docs/headers#setting-the-header-title
                 title: {title},
                 // https://reactnavigation.org/docs/headers#adjusting-header-styles
-                headerStyle: { backgroundColor: COLORS.lightWhite },
+                headerStyle: { backgroundColor: COLORS.background },
                 headerTintColor: '#fff',
                 headerTitleStyle: {
                     fontWeight: 'bold',
@@ -22,13 +22,15 @@ function Header({title}) {
                 },
                 headerShadowVisible: SHADOWS.small,
                 headerLeft: () => (
-                    <Text style={{padding:10}}>
-                        <_headerBtn icon="user" />
+                    <Text style={{padding:SIZES.xSmall}}>
+                        <_headerBtn icon="contacts" />
                     </Text>
                 ),
+                
                 headerRight: () => (
-                    <Text style={{padding:10}}>
+                    <Text style={{padding:SIZES.xSmall}}>
                         <_headerBtn icon="search1" style={{padding:10}}/>
+                        <_headerBtn icon="setting" />
                     </Text>
                     
                 ),

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link, Stack } from 'expo-router';
 import { Image, SafeAreaView, FlatList, StyleSheet, Text, View, Button} from 'react-native';
 import Header from '../components/header/_header';
-import {ItemSeparator, Item} from "../components/List/List_Item";
-import { COLORS,SIZES } from '../constants/theme';
+import {ItemSeparator, Item, PostItem} from "../components/List/List_Item";
+import { COLORS,FONT,SIZES } from '../constants/theme';
 
 const persons = [
     {
@@ -100,7 +100,7 @@ const persons = [
       name: "Lorena Rice",
     },
   ];
-function Groups() {
+function Posts() {
   const [selectedId, setSelectedId] = useState();
 
   const renderItem = ({item}) => {
@@ -120,22 +120,75 @@ function Groups() {
         
       );
     };
+    const [postsselectedId, setPostsSelectedId] = useState();
+
+    const renderPostsItem = ({item}) => {
+      const backgroundColor = item.id === postsselectedId ? COLORS.selectbackground : COLORS.background;
+      const color = item.id === postsselectedId ? COLORS.selectprimaryText : COLORS.primaryText;
+
+      return (
+          <View style={{borderRadius: SIZES.xxxLarge / 1.25, backgroundColor:COLORS.primaryColor,padding:SIZES.xxxSmall, margin:SIZES.xSmall}}>
+              <PostItem
+                    item={item}
+                    onPress={() => setpostsSelectedId(item.id)}
+                    backgroundColor={backgroundColor}
+                    textColor={color}
+                    borderRadius={SIZES.xxxLarge / 1.25}
+                />
+          </View>
+        
+      );
+    };
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = () => {
+      setRefreshing(true);
+
+      // Refresh data here
+
+      setRefreshing(false);
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            <Header title="Groups"></Header>
-            <FlatList
+            <Header title="Posts"></Header>
+            <View>
+              <Text style={{"fontWeight":FONT.bold,"marginHorizontal":SIZES.xSmall,"marginTop":SIZES.xSmall}}>Contacts</Text>
+              <FlatList
+                  data={persons}
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  renderItem={renderPostsItem}
+                  keyExtractor={item => item.id}
+                  extraData={selectedId}
+                  horizontal={true}
+                  stickySectionHeadersEnabled={true}
+                  showsHorizontalScrollIndicator={false}
+                  style={{padding:SIZES.xSmall,backgroundColor:COLORS.background}}
+              />
+            </View>
+            <View>
+              <View style={{flexDirection:'row', alignItems:'center',justifyContent: 'space-between'}}>
+                <Text style={{"fontWeight":FONT.bold,"marginHorizontal":SIZES.xSmall,"marginBottom":SIZES.xSmall}}>Discover</Text>
+                <Text style={{"fontWeight":FONT.bold,"marginHorizontal":SIZES.xSmall,"marginBottom":SIZES.xSmall}}>Instagram</Text>
+              </View>
+              <FlatList
                 data={persons}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 extraData={selectedId}
                 showsVerticalScrollIndicator={false}
-                style={{padding:8}}
+                style={{padding:SIZES.xSmall,backgroundColor:COLORS.background}}
             />
+            </View>
+            
         </SafeAreaView>
     );
 }
 
-export default Groups;
+export default Posts;
 
 const styles = StyleSheet.create({
     container: {
@@ -144,6 +197,6 @@ const styles = StyleSheet.create({
     item: {
       padding: 20,
       fontSize: 15,
-      marginTop: 5,
+      marginTop: 8,
     }
   });

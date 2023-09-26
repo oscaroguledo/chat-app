@@ -1,6 +1,6 @@
 import { Link, Stack } from 'expo-router';
 import { Image, Text, SafeAreaView, Button } from 'react-native';
-import Header from '../header/_header';
+import Header from '../components/header/_header';
 
 function Profile() {
     return (

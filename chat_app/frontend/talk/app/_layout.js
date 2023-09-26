@@ -6,6 +6,13 @@ import {Icon,Icon2 }from '../components/icon/_icon';
 function Layout() {
   return (
     <Tabs screenOptions={{tabBarShowLabel:false}}>
+        <Tabs.Screen name='index' options={
+            {
+                tabBarIcon:({icon}) =>(
+                    <Icon icon={'message1'} />
+                )
+            }
+        } />
         <Tabs.Screen name='phone' options={
             {
                 tabBarIcon:({icon}) =>(
@@ -13,20 +20,7 @@ function Layout() {
                 )
             }
         } />
-        <Tabs.Screen name='chats' options={
-            {
-                tabBarIcon:({icon}) =>(
-                    <Icon icon={'message1'} />
-                )
-            }
-        } />
-        <Tabs.Screen name='index' options={
-            {
-                tabBarIcon:({icon}) =>(
-                    <Icon icon={'camerao'}  />
-                )
-            }
-        } />
+        
         <Tabs.Screen name='groups' options={
             {
                 tabBarIcon:({icon}) =>(
@@ -34,10 +28,17 @@ function Layout() {
                 )
             }
         } />
-        <Tabs.Screen name='options' options={
+        <Tabs.Screen name='post' options={
             {
                 tabBarIcon:({icon}) =>(
-                    <Icon icon={'ellipsis1'} />
+                    <Icon icon={'antdesign'} />
+                )
+            }
+        } />
+        <Tabs.Screen name='profile' options={
+            {
+                tabBarIcon:({icon}) =>(
+                    <Icon2 icon={'user'} />
                 )
             }
         } />
