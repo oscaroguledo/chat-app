@@ -140,6 +140,16 @@ const persons = [
 
 function Chats({ navigation}) {
     const [selectedId, setSelectedId] = useState();
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = () => {
+      setRefreshing(true);
+
+      // Refresh data here
+
+      setRefreshing(false);
+    };
+
 
     const renderItem = ({item}) => {
         const backgroundColor = item.id === selectedId ? COLORS.selectbackground : COLORS.background;
@@ -162,6 +172,8 @@ function Chats({ navigation}) {
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={persons}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 extraData={selectedId}
@@ -185,6 +197,16 @@ const styles = StyleSheet.create({
   });
 
 function UserChat() {
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = () => {
+      setRefreshing(true);
+
+      // Refresh data here
+
+      setRefreshing(false);
+    };
+
     const renderItem = ({item}) => {
         return (
             <View>
@@ -197,10 +219,13 @@ function UserChat() {
         );
       };
 
+
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={persons}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 showsVerticalScrollIndicator={false}

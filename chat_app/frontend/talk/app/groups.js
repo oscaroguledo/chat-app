@@ -102,10 +102,20 @@ const persons = [
   ];
 function Groups({data="groups"}) {
   const [selectedId, setSelectedId] = useState();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    // Refresh data here
+
+    setRefreshing(false);
+  };
 
   const renderItem = ({item}) => {
       const backgroundColor = item.id === selectedId ? COLORS.selectbackground : COLORS.background;
       const color = item.id === selectedId ? COLORS.selectprimaryText : COLORS.primaryText;
+      
   
       return (
           <View>
@@ -125,6 +135,8 @@ function Groups({data="groups"}) {
             <Header title={data}></Header>
             <FlatList
                 data={persons}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 extraData={selectedId}
