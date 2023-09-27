@@ -12,4 +12,9 @@ function Icon2({icon}){
         <Feather name={icon} size={SIZES.xLarge} color={COLORS.primarytext} />
     );
 }
-export {Icon,Icon2};
+function Icon3({icon}){
+    return(
+        <FontAwesome5 name={icon} size={SIZES.xLarge} color={COLORS.primarytext} />
+    );
+}
+export {Icon,Icon2, Icon3};

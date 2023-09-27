@@ -1,149 +1,74 @@
-import { useState } from 'react';
-import { Link, Stack } from 'expo-router';
+import React,{ useState } from 'react';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Image, SafeAreaView, FlatList, StyleSheet, Text, View, Button} from 'react-native';
 import Header from '../components/header/_header';
+import _headerBtn  from '../components/header/_headerBtn';
+import {Contact,Search,Setting, Phone, Video} from '../components/header/_headerIcons';
 import {ItemSeparator, Item} from "../components/List/List_Item";
-import { COLORS, SIZES } from '../constants/theme';
+import { COLORS, SIZES, SHADOWS } from '../constants/theme';
+import {Chats, UserChat} from '../components/chat/chat';
 
-const persons = [
-    {
-      id: "1",
-      name: "Earnest Green",
-    },
-    {
-      id: "2",
-      name: "Winston Orn",
-    },
-    {
-      id: "3",
-      name: "Carlton Collins",
-    },
-    {
-      id: "4",
-      name: "Malcolm Labadie",
-    },
-    {
-      id: "5",
-      name: "Michelle Dare",
-    },
-    {
-      id: "6",
-      name: "Carlton Zieme",
-    },
-    {
-      id: "7",
-      name: "Jessie Dickinson",
-    },
-    {
-      id: "8",
-      name: "Julian Gulgowski",
-    },
-    {
-      id: "9",
-      name: "Ellen Veum",
-    },
-    {
-      id: "10",
-      name: "Lorena Rice",
-    },
-  
-    {
-      id: "11",
-      name: "Carlton Zieme",
-    },
-    {
-        id: "12",
-        name: "Jessie Dickinson",
-      },
-      {
-        id: "13",
-        name: "Julian Gulgowski",
-      },
-      {
-        id: "14",
-        name: "Ellen Veum",
-      },
-      {
-        id: "15",
-        name: "Lorena Rice",
-      },
-      {
-        id: "16",
-        name: "Jessie Dickinson",
-      },
-      {
-        id: "17",
-        name: "Julian Gulgowski",
-      },
-      {
-        id: "18",
-        name: "Ellen Veum",
-      },
-      {
-        id: "19",
-        name: "Lorena Rice",
-      },
-    {
-      id: "20",
-      name: "Jessie Dickinson",
-    },
-    {
-      id: "21",
-      name: "Julian Gulgowski",
-    },
-    {
-      id: "22",
-      name: "Ellen Veum",
-    },
-    {
-      id: "23",
-      name: "Lorena Rice",
-    },
-  ];
-function Chats() {
-    const [selectedId, setSelectedId] = useState();
+const Stack = createStackNavigator();
 
-    const renderItem = ({item}) => {
-        const backgroundColor = item.id === selectedId ? COLORS.selectbackground : COLORS.background;
-        const color = item.id === selectedId ? COLORS.selectprimaryText : COLORS.primaryText;
-    
-        return (
-            <View>
-                <Item
-                    item={item}
-                    onPress={() => setSelectedId(item.id)}
-                    backgroundColor={backgroundColor}
-                    textColor={color}
-                />
-                <ItemSeparator/>
-            </View>
+export default function App() {
+  return (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator >
+        <Stack.Screen name="Chats" options={{
+          title: "Chats",
+          // https://reactnavigation.org/docs/headers#adjusting-header-styles
+          headerStyle: { backgroundColor: COLORS.background },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+              fontWeight: 'bold',
+              color:COLORS.primaryText
+          },
+          headerShadowVisible: SHADOWS.small,
+          headerLeft: () => (
+              <Text style={{padding:SIZES.xSmall}}>
+                  <Contact/>
+              </Text>
+          ),
           
-        );
-      };
-    return (
-        <SafeAreaView style={styles.container}>
-            <Header title="Chats"></Header>
-            <FlatList
-                data={persons}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                extraData={selectedId}
-                showsVerticalScrollIndicator={false}
-                style={{padding:SIZES.xSmall,backgroundColor:COLORS.background}}
-            />
-        </SafeAreaView>
-    );
+          headerRight: () => (
+              <Text style={{padding:SIZES.xSmall}}>
+                  <Search/>
+                  <Setting/>
+              </Text>  
+          ), 
+          // https://reactnavigation.org/docs/headers#replacing-the-title-with-a-custom-component
+          headerTitle: "Chats",
+          headerTitleAlign:'center',
+          horizontal:true
+        }} 
+        component={Chats} />
+
+        <Stack.Screen name="UserChat" options={
+          ({route}) =>(
+            {
+              // https://reactnavigation.org/docs/headers#adjusting-header-styles
+              headerStyle: { backgroundColor: COLORS.background },
+              headerTintColor: COLORS.primaryText,
+              headerTitleStyle: {
+                  fontWeight: 'bold',
+                  color:COLORS.primaryText
+              },
+              headerShadowVisible: SHADOWS.small,
+              
+              headerRight: () => (
+                  <Text style={{padding:SIZES.xSmall}}>
+                      <Phone/>
+                      <Video/>
+                  </Text>
+              ), 
+              // https://reactnavigation.org/docs/headers#replacing-the-title-with-a-custom-component
+              headerTitle:route.params.name,
+              horizontal:true}
+          )
+        } 
+          component={UserChat} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
-
-export default Chats;
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    item: {
-      padding: 20,
-      fontSize: 15,
-      marginTop: 5,
-    }
-  });

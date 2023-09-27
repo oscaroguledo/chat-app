@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, Stack } from 'expo-router';
 import { Image, SafeAreaView, FlatList, StyleSheet, Text, View, Button} from 'react-native';
-import Header from '../components/header/_header';
-import {ItemSeparator, Item} from "../components/List/List_Item";
-import { COLORS,SIZES } from '../constants/theme';
+import Header from '../header/_header';
+import {ItemSeparator, Item, MessageItem} from "../List/List_Item";
+import { COLORS,SIZES } from '../../constants/theme';
 
 const persons = [
     {
@@ -100,7 +100,7 @@ const persons = [
       name: "Lorena Rice",
     },
   ];
-function Groups({data="groups"}) {
+function Chat() {
   const [selectedId, setSelectedId] = useState();
 
   const renderItem = ({item}) => {
@@ -109,12 +109,7 @@ function Groups({data="groups"}) {
   
       return (
           <View>
-              <Item
-                  item={item}
-                  onPress={() => setSelectedId(item.id)}
-                  backgroundColor={backgroundColor}
-                  textColor={color}
-              />
+              <MessageItem item={item}/>
               <ItemSeparator/>
           </View>
         
@@ -122,20 +117,20 @@ function Groups({data="groups"}) {
     };
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={data}></Header>
+            <Header title="Item Names"></Header>
             <FlatList
                 data={persons}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 extraData={selectedId}
                 showsVerticalScrollIndicator={false}
-                style={{padding:8}}
+                style={{padding:4}}
             />
         </SafeAreaView>
     );
 }
 
-export default Groups;
+export default Chat;
 
 const styles = StyleSheet.create({
     container: {

@@ -3,10 +3,10 @@ import { Image, Text, View, Button } from 'react-native';
 import Icon from '../icon/_icon';
 import {COLORS, SHADOWS, SIZES} from "../../constants/theme";
 import _headerBtn from "../header/_headerBtn";
+import {Contact,Search,Setting} from '../header/_headerIcons';
 
 
 function Header({title}) {
-
     return (
         <View >
             <Stack.Screen
@@ -23,23 +23,21 @@ function Header({title}) {
                 headerShadowVisible: SHADOWS.small,
                 headerLeft: () => (
                     <Text style={{padding:SIZES.xSmall}}>
-                        <_headerBtn icon="contacts" />
+                        <Contact />
                     </Text>
                 ),
                 
                 headerRight: () => (
                     <Text style={{padding:SIZES.xSmall}}>
-                        <_headerBtn icon="search1" style={{padding:10}}/>
-                        <_headerBtn icon="setting" />
+                        <Search/>
+                        <Setting />
                     </Text>
                     
-                ),
-                
+                ), 
                 // https://reactnavigation.org/docs/headers#replacing-the-title-with-a-custom-component
                 headerTitle: title,
                 headerTitleAlign:'center',
                 horizontal:true,
-                
 
                 }}
             />

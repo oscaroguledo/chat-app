@@ -1,23 +1,19 @@
 const COLORS = {
     primaryColor:"#ff7f27",
-    gray: "#83829A",
     line: "#c3b8b0",
-  
     white: "#F3F4F8",
     lightWhite: "#FAFAFC",
     background: "#fdf9f7",
     selectbackground:"#6e3b6e",
-
     primaryText:"#181816",
     selectprimaryText:"#4f1e00",
-
-  };
+};
   
-  const FONT = {
+const FONT = {
     regular: "DMRegular",
     medium: "DMMedium",
     bold: 600,
-  };
+};
   
   const SIZES = {
     xxxSmall:1.5,

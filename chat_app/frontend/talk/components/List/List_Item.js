@@ -53,9 +53,17 @@ const PostItem = ({item, onPress,borderRadius}) => (
         </View>  
     </TouchableOpacity>
   );
+const MessageItem = ({item}) => (
+  <View style={{minWidth:'30%', maxWidth:'30%',flexDirection:'row', alignItems:'center',justifyContent: 'flex-start'}}>
+      <Text>
+          {item.name}
+      </Text>
+  </View>  
+);
   
 
 export {
     Item,
     ItemSeparator,
-    PostItem};
+    PostItem,
+    MessageItem};
