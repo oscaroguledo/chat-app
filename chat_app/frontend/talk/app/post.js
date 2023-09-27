@@ -108,14 +108,13 @@ function Posts() {
       const color = item.id === selectedId ? COLORS.selectprimaryText : COLORS.primaryText;
   
       return (
-          <View>
+          <View style={{minWidth:'50%', maxWidth:'50%'}}>
               <Item
                   item={item}
                   onPress={() => setSelectedId(item.id)}
                   backgroundColor={backgroundColor}
                   textColor={color}
               />
-              <ItemSeparator/>
           </View>
         
       );
@@ -179,6 +178,7 @@ function Posts() {
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 extraData={selectedId}
+                numColumns={2}
                 showsVerticalScrollIndicator={false}
                 style={{padding:SIZES.xSmall,backgroundColor:COLORS.background}}
             />
