@@ -4,6 +4,7 @@ import {Animated, Text, View} from 'react-native';
 import {Icon,Icon2 }from '../components/icon/_icon';
 import {Contact,Search,Setting} from '../components/header/_headerIcons';
 import { COLORS, SHADOWS, SIZES } from '../constants/theme';
+import Posts from "./post";
 
 function Layout() {
   return (

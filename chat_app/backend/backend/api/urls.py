@@ -5,4 +5,5 @@ urlpatterns = [
     # serverstatus-------------------------------------------
     path("", serverStatus.as_view()),
     # accounts management-------------------------------------------
-    path("send_message/", send_message.as_view()),]
+    #path("send_message/", send_message.as_view()),
+    ]
