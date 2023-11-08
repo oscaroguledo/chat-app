@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-APPNAME = "GREM"
+APPNAME = "opalchee".upper()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -64,6 +64,8 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+    'DATE_INPUT_FORMATS': ['%m/%d/%Y'],
+    'DATETIME_INPUT_FORMATS': ['%m/%d/%Y %H:%M:%S %Z'],
 }
 
 
@@ -82,7 +84,7 @@ TEMPLATES = [
         },
     },
 ]
-
+AUTH_USER_MODEL = 'api.Profile'
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
