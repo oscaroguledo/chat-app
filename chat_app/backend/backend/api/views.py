@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.conf import settings
 from django.contrib.auth.models import User
-from .models import Profile, Community,PrivateMessage, CommunityAdmin,CommunityMember,CommunityMessage
+from .models import Profile, Community,PrivateMessage, CommunityAdmin,CommunityMember,CommunityMessage, models
 from .serializers import *
 from django.core.serializers import serialize
 #from heyoo import WhatsApp
@@ -568,9 +568,22 @@ class PrivateMessageClass(APIView):
             return Response(data={"isSuccess":False,"response":f"Sorry this sender doesn't exist"},status=404)
         return Response(data={"isSuccess":False,"response":f"Sorry this receiver doesn't exist"},status=404)
 
+class PrivateChatClass(APIView):
+    def get(self,request,sender_id):
+        if Profile.objects.filter(id=sender_id).exists():
+            sender = Profile.objects.get(id=sender_id)
+            chats = PrivateMessage.objects.filter(sender=sender)
+            #print(chats)
+            data= [{f"id":f"{chat.receiver.id}",f"name":f"{chat.receiver.username}",f"message":f"{chat.details}",
+                    f"dtime":f"{chat.created_date}"} 
+                    for chat in chats 
+                    if chat.id == PrivateMessage.objects.filter(sender=sender, receiver = chat.receiver).aggregate(max_id=models.Max('id'))['max_id']]
+            return Response({"isSuccess":True,"num_chats":chats.count(),"chats":data}, status=200)
+        return Response(data={"isSuccess":False,"response":f"Sorry this sender doesn't exist"},status=404)
 class PlatformPrivateMessageClass(APIView):
     def post(self, request):
         pass
+
 """
 @method_decorator(csrf_exempt, name="dispatch")
 class send_message(APIView):

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Image, SafeAreaView, FlatList, StyleSheet, Text, View, Button} from 'react-native';
@@ -141,7 +141,51 @@ const persons = [
 function Chats({ navigation}) {
     const [selectedId, setSelectedId] = useState();
     const [refreshing, setRefreshing] = useState(false);
+    const [persons, setPersons] = useState([]);
 
+    const getd_time =(dateString)=>{
+      const today = new Date();
+      const date = new Date(dateString);
+      const daysDifference = (today - date) / (24 * 60 * 60 * 1000);
+      let message;
+
+      
+      if (daysDifference < 1) {
+        // If the difference is less than one day, display the time
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const period = hours < 12 ? "AM" : "PM";
+        message = `${hours % 12 || 12}:${minutes.toString().padStart(2, '0')} ${period}`;
+      } else if (daysDifference < 30) {
+        // If the difference is less than one month, display the number of days ago
+        message = `${Math.floor(daysDifference)} day${daysDifference > 1 ? 's' : ''} ago`;
+      } else if (daysDifference < 365) {
+        // If the difference is less than one year, display the number of months ago
+        const monthsDifference = Math.floor(daysDifference / 30);
+        message = `${monthsDifference} month${monthsDifference > 1 ? 's' : ''} ago`;
+      } else {
+        // If the difference is one year or more, display the number of years ago
+        const yearsDifference = Math.floor(daysDifference / 365);
+        message = `${yearsDifference} year${yearsDifference > 1 ? 's' : ''} ago`;
+      }
+      return message
+    }
+
+    useEffect(() => {
+      // Define the API URL you want to fetch data from
+      const apiUrl = 'http://127.0.0.1:8000/get_chats_private/101b5318-7793-400b-9755-7a0604796671/'; // Replace with your API endpoint
+
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          // Assuming the API response provides data in the desired format
+          console.log(data.chats)
+          setPersons(data.chats);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
     const onRefresh = () => {
       setRefreshing(true);
 
@@ -159,9 +203,10 @@ function Chats({ navigation}) {
             <View>
                 <Item
                     item={item}
-                    onPress={() => navigation.dispatch(StackActions.push("UserChat", { id: item.id, name:item.name, messages:item.messages }))}
+                    onPress={() => navigation.dispatch(StackActions.push("UserChat", { id: item.id, name:item.name, messages:item.message }))}
                     backgroundColor={backgroundColor}
                     textColor={color}
+                    rightiteone={getd_time(item.dtime)}
                 />
                 <ItemSeparator/>
             </View>

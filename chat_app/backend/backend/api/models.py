@@ -81,6 +81,8 @@ class Profile(AbstractBaseUser):
 
     def has_perm(self, perm, obj=None):
         return self.is_superuser
+    class Meta:
+        ordering = ['-date_joined']
 
 
 class Platform(models.Model):
@@ -102,6 +104,8 @@ class PrivateMessage(models.Model):
     def __str__(self):
         self.name = f"id({self.id})  date({self.created_date})"
         return self.name
+    class Meta:
+        ordering = ['-created_date']
 
 
 class Community(models.Model):
@@ -116,17 +120,22 @@ class Community(models.Model):
         return self.name
     class Meta:
         verbose_name_plural = "Communities"
+        ordering = ['-created_on']
 
 class CommunityMember(models.Model):
     user= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     community = models.ForeignKey(Community, on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return f"{self.user.id}-{self.user.username} ({self.community.id})"
+    class Meta:
+        ordering = ['user__first_name']
 class CommunityAdmin(models.Model):
     user= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     community = models.ForeignKey(Community, on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return f"{self.user.id}-{self.user.username} ({self.community.id})"
+    class Meta:
+        ordering = ['user__first_name']
 
 class CommunityMessage(models.Model):
     sent_by= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
@@ -136,17 +145,25 @@ class CommunityMessage(models.Model):
     date = models.DateTimeField(auto_now_add=False,null=True)
     def __str__(self):
         return f"{self.community.id}-({self.sent_by.id} {self.sent_by.id})"
+    class Meta:
+        ordering = ['-date']
 
 class CommunityMessageRecipient(models.Model):
     message = models.ForeignKey(CommunityMessage, on_delete=models.CASCADE)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.user.id}-{self.user.username} ({self.message.community.id})"
+    class Meta:
+        ordering = ['-date']
 
 class CommunityMessageViewer(models.Model):
     message = models.ForeignKey(CommunityMessage, on_delete=models.CASCADE)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.user.id}-{self.user.username} ({self.message.community.id})"
+    class Meta:
+        ordering = ['-date']
 
        

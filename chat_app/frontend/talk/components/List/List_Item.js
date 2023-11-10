@@ -22,9 +22,9 @@ const Item = ({item, onPress,textColor, rightiteone, rightitetwo}) => (
               <Profile iconUrl={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPgNRu3Aj5twxLhAVLEzq5OvIlmvXK8SF4-Q&usqp=CAU"} 
                   dimension={50} size={50} />
 
-              <View  style={{justify:"flex-start",width:140}}>
+              <View  style={{justify:"flex-start",width:150}}>
                   <Text style={{color: textColor,padding:16, paddingBottom:2, fontSize:SIZES.medium, fontWeight:800}}>{item.name}</Text>
-                  <Text style={{color: textColor,padding:16,paddingTop:3, fontSize:SIZES.small}}>{item.name}</Text>
+                  <Text style={{color: textColor,padding:16,paddingTop:3, fontSize:SIZES.small}}>{item.message}</Text>
               </View>
           </View>
 
@@ -32,9 +32,9 @@ const Item = ({item, onPress,textColor, rightiteone, rightitetwo}) => (
               
           </View>
           
-          <View style={{width:50}}>
+          <View style={{width:60}}>
               <Text>
-                  {rightiteone}jvjhv
+                  {rightiteone}
               </Text>
               <Text>
                   {rightitetwo}

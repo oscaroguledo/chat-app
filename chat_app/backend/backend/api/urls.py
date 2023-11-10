@@ -27,7 +27,9 @@ urlpatterns = [
 
     # private chat----------------------------------------------------------------
     path("send_message_private/",PrivateMessageClass.as_view()),
-    path("get_message_private/<str:sender_id>/<str:receiver_id>/<str:created_date>/",PrivateMessageClass.as_view()),
+    path("get_message_private/<str:sender_id>/<str:receiver_id>/<str:created_date>/",PrivateMessageClass.as_view()),    
     path("update_message_private/<str:sender_id>/<str:receiver_id>/<str:created_date>/",PrivateMessageClass.as_view()),
     path("delete_message_private/<str:sender_id>/<str:receiver_id>/<str:created_date>/",PrivateMessageClass.as_view()),#-------------------------------
+    path("get_chats_private/<str:sender_id>/",PrivateChatClass.as_view()),
+    #path("delete_chat_private/<str:sender_id>/<str:receiver_id>/",PrivateChatClass.as_view()),
     ]
